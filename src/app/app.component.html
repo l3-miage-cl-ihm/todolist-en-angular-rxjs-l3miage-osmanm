@@ -1,1 +1,15 @@
-Todolist...
+<h1></h1>
+Ajouter <form (submit)="this.sigITEMS()"><input #newTodo/></form>
+<ul>
+  <li>
+    <input  type="checkbox" />
+    <form (submit)="appendItemsR($event)">
+      <input  type="text" name="newLabel" #newLabel />
+      
+    </form>
+    <button>X</button>
+  </li>
+</ul>
+
+
+
