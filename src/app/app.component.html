@@ -1,13 +1,13 @@
-<h1></h1>
-Ajouter <form (submit)="this.sigITEMS()"><input #newTodo/></form>
+<h1>TODO LIST</h1>
+<form (submit)="appendItemsR(newTodo.value);">
+  <input #newTodo placeholder="Ajoutez un nouvel élément" />
+</form>
+
 <ul>
-  <li>
-    <input  type="checkbox" />
-    <form (submit)="appendItemsR($event)">
-      <input  type="text" name="newLabel" #newLabel />
-      
-    </form>
-    <button>X</button>
+  <li *ngFor="let item of this.sigITEMS().items; let i = index">
+    <input type="checkbox" [checked]="item.done" (change)="updateItemDone(item, $event)" />
+    <input type="text" [value]="item.label" (change)="updateItemLabel(item, $any($event.target).value)" name="newLabel" />
+    <button (click)="deleteItemsR(item)">X</button>
   </li>
 </ul>
 
