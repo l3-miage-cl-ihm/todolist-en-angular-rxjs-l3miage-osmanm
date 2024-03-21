@@ -14,25 +14,16 @@ export class AppComponent {
  constructor(private todServ:TodoListService){
   
  }
- appendItemsR(s:string){
-  if(s.length>0){
-    let h:NonEmptyList<string>=[s] 
-    this.todServ.appendItems(h);
-  }
-  
- }
- deleteItemsR(elmts:TodoItem){
-
-    let h:NonEmptyList<TodoItem>=[elmts] 
-    this.todServ.deleteItems(h) 
- }
- updateItemDone(item: TodoItem, event: Event): void {
-  const input = event.target as HTMLInputElement;
-  this.todServ.updateItems({ ...item, done: input.checked }, [item]);
+ appendItemsR(s: NonEmptyList<string>) {
+  console.log([s]);
+  this.todServ.appendItems(s);
 }
 
-updateItemLabel(item: TodoItem, event: Event): void {
-  const input = event.target as HTMLInputElement;
-  this.todServ.updateItems({ ...item, label: input.value }, [item]);
+updateItemR(l: readonly [Partial<TodoItem>, NonEmptyList<TodoItem>]) {
+  this.todServ.updateItems(l[0], l[1]);
 }
+deleteItemsR(t: NonEmptyList<TodoItem>) {
+  this.todServ.deleteItems(t);
+}
+
 }

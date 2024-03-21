@@ -1,38 +1,49 @@
 <section class="todoapp">
     <header class="header">
       <h1></h1>
-      <form>
+      <form (submit)="updateAppendI(lab.value)">
         <input  name        = "newTodoInput"
                 class       = "new-todo"
                 placeholder = "Que faire?"
-                autofocus #lab/>
+                autofocus #lab  />
       </form>
     </header>
+
     <section class="main">
-      <input  class="toggle-all"
+      <input  class="toggle-all" 
+              [ngModel]="this.sigState().isAllDone" 
+              (ngModelChange)="checkAllItems()"
               type="checkbox"
               name="toggleAll"
       />
-      <label for="toggleAll">Mark all as complete</label>
+      <label *ngIf="!(sigState().isAllDone)" for="toggleAll">Mark all as complete</label>
       <ul class="todo-list" >
-        <li>
-            <!-- Chaque li devra contenir un composant Item -->
+        <li *ngFor="let elmt of sigState().filteredItems" [ngClass]="{'editing' :ta_c.sigItemState().editing}">
+          <app-todo-item  #ta_c [tdi]="elmt"
+                          (update)="this.updateItem($event, [elmt])"
+                          (delete)="this.deleteItem(elmt)">
+          </app-todo-item>
         </li>
+        
       </ul>
     </section>
     <footer class="footer">
-      <span class="todo-count"><strong></strong> restantes</span>
+      <span class="todo-count"><strong>{{this.sigState().nbItemsLeft }}</strong> taches restantes</span>
       <ul class="filters">
         <li>
-          <a class="filterAll">Tous</a>
+          
+          <a class="filterAll" (click)="currentFilterToAll()" [ngClass]="{'selected': this.sigState().currentFilter === filterAll}">Tous</a>
         </li>
         <li>
-          <a class="filterActives">Actifs</a>
+          <a class="filterUndone" (click)="currentFilterToDone()" [ngClass]="{'selected': this.sigState().currentFilter === filterDone}">Actifs</a>
         </li>
         <li>
-          <a class="filterCompleted">Complétés</a>
+          <a class="filterDone" (click)="currentFilterToUnDone()" [ngClass]="{'selected': this.sigState().currentFilter === filterUndone}">Complétés</a>
         </li>
       </ul>
-      <button class="clear-completed">Supprimer cochées</button>
+      <button class="clear-completed" (click)="RmvElemtsDone()">Supprimer cochées</button>
     </footer>
   </section>
+  <pre>
+    {{sigState()|json}}
+  </pre>
