@@ -12,7 +12,7 @@
     <section class="main">
       <input  class="toggle-all" 
               [ngModel]="this.sigState().isAllDone" 
-              (ngModelChange)="checkAllItems()"
+              (ngModelChange)="checkAllItems(!this.sigState().isAllDone)"
               type="checkbox"
               name="toggleAll"
       />
@@ -23,6 +23,8 @@
                           (update)="this.updateItem($event, [elmt])"
                           (delete)="this.deleteItem(elmt)">
           </app-todo-item>
+          
+          
         </li>
         
       </ul>
@@ -32,13 +34,13 @@
       <ul class="filters">
         <li>
           
-          <a class="filterAll" (click)="currentFilterToAll()" [ngClass]="{'selected': this.sigState().currentFilter === filterAll}">Tous</a>
+          <a class="filterAll" (click)="currentFilterToAll()" [ngClass]="{'selected': this.sigState().currentFilter == filterAll}">Tous</a>
         </li>
         <li>
-          <a class="filterUndone" (click)="currentFilterToDone()" [ngClass]="{'selected': this.sigState().currentFilter === filterDone}">Actifs</a>
+          <a class="filterUndone" (click)="currentFilterToUnDone()" [ngClass]="{'selected': this.sigState().currentFilter == filterUndone}">Actifs</a>
         </li>
         <li>
-          <a class="filterDone" (click)="currentFilterToUnDone()" [ngClass]="{'selected': this.sigState().currentFilter === filterUndone}">Complétés</a>
+          <a class="filterDone" (click)="currentFilterToDone()" [ngClass]="{'selected': this.sigState().currentFilter == filterDone}">Complétés</a>
         </li>
       </ul>
       <button class="clear-completed" (click)="RmvElemtsDone()">Supprimer cochées</button>

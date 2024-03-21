@@ -24,7 +24,9 @@ export class TodoListComponent {
   public readonly filterDone:FCT_FILTER=((i:TodoItem)=>{return i.done});
   public readonly filterUndone:FCT_FILTER=((i:TodoItem)=>{return !(i.done)});
   private readonly _currentFilter=signal<FCT_FILTER>(this.filterAll)
-  
+  readonly itemsFiltered = computed<readonly TodoItem[]>(
+    () => this.tdl.items.filter(this._currentFilter())
+  );
   readonly sigState = computed<TdlState>( () => {
     
     return {
@@ -32,7 +34,7 @@ export class TodoListComponent {
       nbItemsLeft:this.nbItemsUndone(),
       isAllDone:this.tdl.items.every((i:TodoItem)=>{ (i.done)==true}),
       currentFilter:this._currentFilter(),
-      filteredItems: this.tdl.items.filter(this._currentFilter())
+      filteredItems: this.itemsFiltered()
     }});
     public updateAppendI(e:string):void{
       if (e.length>0){
@@ -51,11 +53,11 @@ export class TodoListComponent {
       this.deleteItems.emit([t]);
     }
      
-    checkAllItems(){
+    checkAllItems(b:boolean){
       const items = this.tdl.items;
       if (nonEmptyList(items)) {
         this.updateItems.emit([
-          { done:!this.sigState().isAllDone},
+          { done:b},
           items
         ])
       }
