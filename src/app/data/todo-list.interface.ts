@@ -1,5 +1,5 @@
 import { Signal } from "@angular/core";
-import { TodoList, TodoItem } from "./todolist";
+import { TodoItem, TodoList } from "./todolist";
 import { NonEmptyList } from "./utils";
 
 export interface TodolistServiceInterface {
@@ -8,4 +8,4 @@ export interface TodolistServiceInterface {
     updateItems(up: Partial<TodoItem>, items: NonEmptyList<TodoItem>): this;
     deleteItems(list: NonEmptyList<TodoItem>): this;
   }
-  
+   

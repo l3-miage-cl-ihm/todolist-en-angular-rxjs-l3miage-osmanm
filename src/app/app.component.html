@@ -1,1 +1,20 @@
-Todolist...
+<h1>TODO LIST</h1><!--
+<form (submit)="appendItemsR(newTodo.value);">
+  <input #newTodo placeholder="Ajoutez un nouvel élément" />
+</form>
+
+<ul>
+  <li *ngFor="let item of this.sigITEMS().items; let i = index">
+    <input type="checkbox" [checked]="item.done" (change)="updateItemDone(item, $event)" />
+    <input type="text" [value]="item.label" (change)="updateItemLabel(item, $any($event.target).value)" name="newLabel" />
+    <button (click)="deleteItemsR(item)">X</button>
+  </li>
+</ul>-->
+<app-todo-list [tdl]="this.sigITEMS()" 
+               (appendItems)="appendItemsR($event)" 
+               (updateItems)="updateItemR($event)" 
+               (deleteItems)="deleteItemsR($event)"> 
+</app-todo-list>
+{{this.sigITEMS()|json}}
+
+

@@ -1,0 +1,14 @@
+<div class="view">
+        <input class="toggle" 
+        type="checkbox" name="done"
+        [ngModel]="this.sigItemState().item.done"
+        (ngModelChange)="checksDoneItem(!this.sigItemState().item.done)" />
+        <label class="texte" (dblclick)="this._sigEditing.set(true)" > 
+                {{this.tdi.label}}
+        </label>
+        <button class="destroy" (click)="deleteItem(this.tdi)"></button>
+</div>
+<form (submit)="updateItemLabel(newTextInput.value)" >
+                <input #newTextInput name="newTextInput" class="edit" 
+                [ngModel]="this.sigItemState().item.label"/>
+</form>

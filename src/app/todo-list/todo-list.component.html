@@ -1,0 +1,51 @@
+<section class="todoapp">
+    <header class="header">
+      <h1></h1>
+      <form (submit)="updateAppendI(lab.value)">
+        <input  name        = "newTodoInput"
+                class       = "new-todo"
+                placeholder = "Que faire?"
+                autofocus #lab  />
+      </form>
+    </header>
+
+    <section class="main">
+      <input  class="toggle-all" 
+              [ngModel]="this.sigState().isAllDone" 
+              (ngModelChange)="checkAllItems(!this.sigState().isAllDone)"
+              type="checkbox"
+              name="toggleAll"
+      />
+      <label *ngIf="!(sigState().isAllDone)" for="toggleAll">Mark all as complete</label>
+      <ul class="todo-list" >
+        <li *ngFor="let elmt of sigState().filteredItems" [ngClass]="{'editing' :ta_c.sigItemState().editing}" [ngClass]="{'completed':ta_c.sigItemState().item.done===true}">
+          <app-todo-item  #ta_c [tdi]="elmt"
+                          (update)="this.updateItem($event, [elmt])"
+                          (delete)="this.deleteItem(elmt)">
+          </app-todo-item>
+          
+          
+        </li>
+        
+      </ul>
+    </section>
+    <footer class="footer">
+      <span class="todo-count"><strong>{{this.sigState().nbItemsLeft }}</strong> taches restantes</span>
+      <ul class="filters">
+        <li>
+          
+          <a class="filterAll" (click)="currentFilterToAll()" [ngClass]="{'selected': this.sigState().currentFilter == filterAll}">Tous</a>
+        </li>
+        <li>
+          <a class="filterUndone" (click)="currentFilterToUnDone()" [ngClass]="{'selected': this.sigState().currentFilter == filterUndone}">Actifs</a>
+        </li>
+        <li >
+          <a class="filterDone" (click)="currentFilterToDone()" [ngClass]="{'selected': this.sigState().currentFilter == filterDone}">Complétés</a>
+        </li>
+      </ul>
+      <button class="clear-completed" (click)="RmvElemtsDone()">Supprimer cochées</button>
+    </footer>
+  </section>
+  <pre>
+    {{sigState()|json}}
+  </pre>
