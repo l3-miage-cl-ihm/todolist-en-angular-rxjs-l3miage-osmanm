@@ -18,7 +18,7 @@
       />
       <label *ngIf="!(sigState().isAllDone)" for="toggleAll">Mark all as complete</label>
       <ul class="todo-list" >
-        <li *ngFor="let elmt of sigState().filteredItems" [ngClass]="{'editing' :ta_c.sigItemState().editing}">
+        <li *ngFor="let elmt of sigState().filteredItems" [ngClass]="{'editing' :ta_c.sigItemState().editing}" [ngClass]="{'completed':ta_c.sigItemState().item.done===true}">
           <app-todo-item  #ta_c [tdi]="elmt"
                           (update)="this.updateItem($event, [elmt])"
                           (delete)="this.deleteItem(elmt)">
@@ -39,7 +39,7 @@
         <li>
           <a class="filterUndone" (click)="currentFilterToUnDone()" [ngClass]="{'selected': this.sigState().currentFilter == filterUndone}">Actifs</a>
         </li>
-        <li>
+        <li >
           <a class="filterDone" (click)="currentFilterToDone()" [ngClass]="{'selected': this.sigState().currentFilter == filterDone}">Complétés</a>
         </li>
       </ul>
